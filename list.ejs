@@ -1,0 +1,53 @@
+<!-- this is the base template to create all our todo lists // this is html file,
+which is capable of running from this this ejs file
+any page in the view folder is what you see on the website -->
+
+<!-- see ejs.co site for documenation on ejs -->
+
+<%- include("header") -%>
+<!-- this is the partial that makes sure the header tag from header.ejs will be included in all pages -->
+<div class="heading" id="heading1">
+  <h1>Mark's Note Taking Service</h1>
+</div>
+
+<div class="box" id="heading">
+  <h1><%= listTitle %></h1>
+</div>
+
+<div class="box">
+  <!-- will use forEach loop to render one by one on the page whatever the user inputs ie. whatever is in newListItems -->
+  <% newListItems.forEach(function(item) { %>
+
+  <form action="/delete" method="POST">
+    <div class="item">
+      <input
+        type="checkbox"
+        name="checkbox"
+        value="<%=item._id%>"
+        onChange="this.form.submit()"
+      />
+      <!-- when there is change i.e it's checked,  to checkbox, will submit this form to post request-->
+
+      <p><%= item.name %></p>
+      <!-- only renders the name of the item from the Item model in app.js-->
+    </div>
+  </form>
+
+  <% }) %>
+
+  <form class="item" action="/" method="post">
+    <!-- the / in action represents the home route
+      post method sends the form-data as an HTTP post transaction to the server  ie. to the homeroute on localhost -->
+    <input
+      type="text"
+      name="newItem"
+      placeholder="Add new note"
+      autocomplete="off"
+    />
+    <!-- the autocomplete turns off the auto saved suggestions on the this input box-->
+    <button type="submit" name="list" value="<%= listTitle %>">+</button>
+  </form>
+</div>
+
+<%- include("footer") -%>
+<!-- this is the partial that makes sure the footer tag from footer.ejs will be included in all pages -->
